@@ -2,15 +2,15 @@ spring:
   application:
     name: vlog
 
-datasource:
-  url: jdbc:mysql://localhost:13306/jpashop
-  username: root
-  password:
-  driver-class-name: com.mysql.cj.jdbc.Driver
+  datasource:
+    url: jdbc:mysql://localhost:3307/liondb
+    username: root
+    password: root1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-jpa:
-  hibernate:
-    ddl-auto: update
+  jpa:
+    hibernate:
+      ddl-auto: update
     properties:
       hibernate:
         format_sql: true
