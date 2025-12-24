@@ -26,7 +26,6 @@ public class User {
 //    @OneToMany(mappedBy = "user")
 //    private List<Comment> comments =  new ArrayList<>();
 
-
     private String email;
     private String password;
     private String nickname;

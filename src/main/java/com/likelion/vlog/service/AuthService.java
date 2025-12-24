@@ -28,6 +28,7 @@ public class AuthService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("없는 이메일"));
         return toUserDetail(user);
     }
+
     @Transactional
     public String signup(SignupRequestDto dto){
         if(userRepository.existsByEmail(dto.getEmail())){

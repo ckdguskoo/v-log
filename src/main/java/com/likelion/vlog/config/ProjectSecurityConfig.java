@@ -32,6 +32,7 @@ public class ProjectSecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws  Exception {
         http.csrf(AbstractHttpConfigurer::disable);
+        // TODO: 프론트엔드 연결 시 CORS 설정 필요 (allowedOrigins, allowCredentials 등)
         http.cors(withDefaults());
         http.authorizeHttpRequests(auth -> auth
                         // 인증 X
