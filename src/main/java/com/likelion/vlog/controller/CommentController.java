@@ -30,10 +30,10 @@ public class CommentController {
      * - 인증 불필요
      */
     @GetMapping
-    public ResponseEntity<ApiResponse<List<CommentWithRepliesResponse>>> getComments(
+    public ResponseEntity<ApiResponse<List<CommentWithRepliesGetResponse>>> getComments(
             @PathVariable Long postId) {
 
-        List<CommentWithRepliesResponse> response = commentService.getComments(postId);
+        List<CommentWithRepliesGetResponse> response = commentService.getComments(postId);
         return ResponseEntity.ok(ApiResponse.success("댓글 목록 조회 성공", response));
     }
 
@@ -73,16 +73,15 @@ public class CommentController {
      * 댓글 삭제 (DELETE /api/v1/posts/{postId}/comments/{commentId})
      * - 인증 필요
      * - 작성자만 삭제 가능
-     * - 성공 시 204 No Content
      */
     @DeleteMapping("/{commentId}")
-    public ResponseEntity<Void> deleteComment(
+    public ResponseEntity<ApiResponse<?>> deleteComment(
             @PathVariable Long postId,
             @PathVariable Long commentId,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         commentService.deleteComment(postId, commentId, userDetails.getUsername());
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("댓글 삭제 성공"));
     }
 
     /**
@@ -123,16 +122,15 @@ public class CommentController {
      * 답글 삭제 (DELETE /api/v1/posts/{postId}/comments/{commentId}/replies/{replyId})
      * - 인증 필요
      * - 작성자만 삭제 가능
-     * - 성공 시 204 No Content
      */
     @DeleteMapping("/{commentId}/replies/{replyId}")
-    public ResponseEntity<Void> deleteReply(
+    public ResponseEntity<ApiResponse<?>> deleteReply(
             @PathVariable Long postId,
             @PathVariable Long commentId,
             @PathVariable Long replyId,
             @AuthenticationPrincipal UserDetails userDetails) {
 
         commentService.deleteReply(postId, commentId, replyId, userDetails.getUsername());
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(ApiResponse.success("답글 삭제 성공"));
     }
 }

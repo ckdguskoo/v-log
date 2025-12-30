@@ -30,13 +30,13 @@ public class CommentService {
     /**
      * 게시글의 댓글 목록 조회 (대댓글 포함)
      */
-    public List<CommentWithRepliesResponse> getComments(Long postId) {
+    public List<CommentWithRepliesGetResponse> getComments(Long postId) {
         Post post = findPostById(postId);
 
         List<Comment> comments = commentRepository.findAllByPostWithChildren(post);
 
         return comments.stream()
-                .map(CommentWithRepliesResponse::from)
+                .map(CommentWithRepliesGetResponse::from)
                 .toList();
     }
 

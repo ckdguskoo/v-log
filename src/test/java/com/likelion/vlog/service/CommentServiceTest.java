@@ -313,7 +313,7 @@ class CommentServiceTest {
             given(commentRepository.findAllByPostWithChildren(post)).willReturn(List.of(comment));
 
             // when
-            List<CommentWithRepliesResponse> responses = commentService.getComments(1L);
+            List<CommentWithRepliesGetResponse> responses = commentService.getComments(1L);
 
             // then
             assertThat(responses).hasSize(1);

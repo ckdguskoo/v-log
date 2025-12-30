@@ -1,6 +1,6 @@
 package com.likelion.vlog.service;
 
-import com.likelion.vlog.dto.comments.CommentWithRepliesResponse;
+import com.likelion.vlog.dto.comments.CommentWithRepliesGetResponse;
 import com.likelion.vlog.dto.posts.*;
 import com.likelion.vlog.entity.*;
 import com.likelion.vlog.exception.ForbiddenException;
@@ -80,9 +80,9 @@ public class PostService {
         List<String> tags = getTagNames(post);
 
         // 댓글 조회 (대댓글 포함)
-        List<CommentWithRepliesResponse> comments = commentRepository.findAllByPostWithChildren(post)
+        List<CommentWithRepliesGetResponse> comments = commentRepository.findAllByPostWithChildren(post)
                 .stream()
-                .map(CommentWithRepliesResponse::from)
+                .map(CommentWithRepliesGetResponse::from)
                 .toList();
 
         return PostGetResponse.of(post, tags, comments);

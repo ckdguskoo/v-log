@@ -659,7 +659,15 @@ GET /posts?page=0&size=10&blogId=1
 
 **Response**
 
-- `204 No Content`
+- `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "댓글 삭제 성공",
+  "data": null
+}
+```
 
 **Error Response**
 
@@ -854,7 +862,15 @@ GET /posts?page=0&size=10&blogId=1
 
 **Response**
 
-- `204 No Content`
+- `200 OK`
+
+```json
+{
+  "success": true,
+  "message": "답글 삭제 성공",
+  "data": null
+}
+```
 
 **Error Response**
 

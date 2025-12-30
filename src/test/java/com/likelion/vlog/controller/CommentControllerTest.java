@@ -48,6 +48,9 @@ class CommentControllerTest {
     @MockBean
     private AuthService authService;
 
+    @MockBean
+    private org.springframework.data.jpa.mapping.JpaMetamodelMappingContext jpaMetamodelMappingContext;
+
     @Nested
     @DisplayName("댓글 목록 조회 API")
     class GetComments {
@@ -56,8 +59,8 @@ class CommentControllerTest {
         @DisplayName("댓글 목록 조회 성공")
         void getComments_Success() throws Exception {
             // given
-            List<CommentWithRepliesResponse> responses = List.of(
-                    createCommentWithRepliesResponse(1L, "테스트 댓글")
+            List<CommentWithRepliesGetResponse> responses = List.of(
+                    createCommentWithRepliesGetResponse(1L, "테스트 댓글")
             );
             given(commentService.getComments(1L)).willReturn(responses);
 
@@ -168,7 +171,8 @@ class CommentControllerTest {
             mockMvc.perform(delete("/api/v1/posts/1/comments/1")
                             .with(csrf()))
                     .andDo(print())
-                    .andExpect(status().isNoContent());
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.message").value("댓글 삭제 성공"));
         }
 
         @Test
@@ -250,14 +254,15 @@ class CommentControllerTest {
             mockMvc.perform(delete("/api/v1/posts/1/comments/1/replies/2")
                             .with(csrf()))
                     .andDo(print())
-                    .andExpect(status().isNoContent());
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.message").value("답글 삭제 성공"));
         }
     }
 
     // === 헬퍼 메서드 ===
 
-    private CommentWithRepliesResponse createCommentWithRepliesResponse(Long id, String content) {
-        return CommentWithRepliesResponse.builder()
+    private CommentWithRepliesGetResponse createCommentWithRepliesGetResponse(Long id, String content) {
+        return CommentWithRepliesGetResponse.builder()
                 .commentId(id)
                 .content(content)
                 .author(createAuthorResponse())

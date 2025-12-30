@@ -8,11 +8,11 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 /**
- * 게시글 상세 조회 내 replies 배열용 응답 객체
+ * GET /posts/{postId}/comments 내 replies 배열용 응답 객체
  */
 @Getter
 @Builder
-public class ReplyResponse {
+public class ReplyGetResponse {
 
     private Long replyId;
     private String content;
@@ -20,8 +20,8 @@ public class ReplyResponse {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
-    public static ReplyResponse from(Comment reply) {
-        return ReplyResponse.builder()
+    public static ReplyGetResponse from(Comment reply) {
+        return ReplyGetResponse.builder()
                 .replyId(reply.getId())
                 .content(reply.getContent())
                 .author(AuthorResponse.from(reply.getUser()))

@@ -1,6 +1,6 @@
 package com.likelion.vlog.dto.posts;
 
-import com.likelion.vlog.dto.comments.CommentWithRepliesResponse;
+import com.likelion.vlog.dto.comments.CommentWithRepliesGetResponse;
 import com.likelion.vlog.entity.Post;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,14 +19,14 @@ public class PostGetResponse {
     private String content;
     private AuthorResponse author;
     private List<String> tags;
-    private List<CommentWithRepliesResponse> comments;
+    private List<CommentWithRepliesGetResponse> comments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     /**
      * 정적 팩토리 메서드 (댓글 포함)
      */
-    public static PostGetResponse of(Post post, List<String> tags, List<CommentWithRepliesResponse> comments) {
+    public static PostGetResponse of(Post post, List<String> tags, List<CommentWithRepliesGetResponse> comments) {
         return PostGetResponse.builder()
                 .postId(post.getId())
                 .title(post.getTitle())
