@@ -87,7 +87,17 @@ com.likelion.vlog
 | POST | `/api/v1/posts/{postId}/like` | 좋아요 추가 | O |
 | DELETE | `/api/v1/posts/{postId}/like` | 좋아요 취소 | O |
 
-**참고**: 댓글은 PostResponse에 포함되어 반환됩니다 (별도 엔드포인트 없음)
+### 댓글 (`/api/v1/posts/{postId}/comments`)
+
+| Method | Endpoint | 설명 | 인증 |
+|--------|----------|------|------|
+| GET | `/api/v1/posts/{postId}/comments` | 댓글 목록 조회 | X |
+| POST | `/api/v1/posts/{postId}/comments` | 댓글 작성 | O |
+| PUT | `/api/v1/posts/{postId}/comments/{id}` | 댓글 수정 | O (작성자) |
+| DELETE | `/api/v1/posts/{postId}/comments/{id}` | 댓글 삭제 | O (작성자) |
+| POST | `/api/v1/posts/{postId}/comments/{id}/replies` | 답글 작성 | O |
+| PUT | `/api/v1/posts/{postId}/comments/{id}/replies/{replyId}` | 답글 수정 | O (작성자) |
+| DELETE | `/api/v1/posts/{postId}/comments/{id}/replies/{replyId}` | 답글 삭제 | O (작성자) |
 
 ## Entity 관계
 
@@ -144,7 +154,13 @@ DTOs는 도메인별로 하위 패키지 구성:
 - `dto/like/`: 좋아요 관련 (LikeResponse)
 - `dto/users/`: 사용자 관련
 - `dto/tags/`: 태그 관련
+- `dto/comments/`: 댓글 관련
 - `dto/common/`: 공통 응답 (ApiResponse, ErrorResponse, PageResponse 등)
+
+**DTO 네이밍 컨벤션**:
+- Request: `{Action}{HttpMethod}Request` (예: `CommentCreatePostRequest`)
+- Response: `{Resource}{HttpMethod}Response` (예: `PostGetResponse`)
+- 공통 응답 래퍼: `ApiResponse.success()`, `ApiResponse.error()`
 
 ## 구현 현황
 
@@ -154,10 +170,10 @@ DTOs는 도메인별로 하위 패키지 구성:
 - 사용자 CRUD
 - 해시태그 (TagMap을 통한 다대다 관계)
 - 좋아요 CRUD (LikeController, LikeService)
+- 댓글/답글 CRUD (계층형 1-depth)
 
 ### 미구현
 - 팔로우 (Follow entity만 존재, 기능 미구현)
-- 댓글 별도 엔드포인트 (현재 PostResponse에만 포함)
 
 ## 구현 가이드
 
@@ -222,7 +238,6 @@ DTOs는 도메인별로 하위 패키지 구성:
 - [ ] **User.java**: `BaseEntity` 상속, `@Setter` 제거
 
 ### Enhancement
-- [ ] **댓글 API**: 별도 엔드포인트 추가 (현재 PostResponse에만 포함)
 - [ ] **팔로우 기능**: FollowController, FollowService 구현
 - [ ] **CORS 설정**: 프론트엔드 연결 시 `ProjectSecurityConfig`에서 allowedOrigins 등 설정
 - [ ] **TagController**: 현재 비어있음, 태그 조회 API 추가 가능
